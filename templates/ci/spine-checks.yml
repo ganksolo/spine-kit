@@ -1,0 +1,16 @@
+# 示例，需人工选择启用。先补项目运行时与依赖安装；不由 setup 自动安装。
+name: Workflow checks
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      # 在此安装本项目运行时/依赖；不要向不可信 PR 暴露生产 secrets。
+      - run: python3 .spine/vendor/scripts/setup.py validate --target .
+      - run: python3 .spine/vendor/scripts/verify.py --target .
