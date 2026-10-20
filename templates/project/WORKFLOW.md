@@ -14,11 +14,14 @@
 1. **Product Spine**：项目启动或方向变化时确认目标、用户路径、non-goals，不每个任务重写。
 2. **Grill with Docs**：当前需求存在关键未知时读取文档/代码并澄清，输出确认的范围、决策和验收条件。
 3. **Trellis**：建立当前任务，至少包含 objective、non-goals、验收证据、验证计划；组织上下文并跟踪状态。
-4. **实现 + Superpowers**：按任务实现；可测试行为按需 TDD，故障先复现与系统化调试，完成前核对实际验证。
+4. **实现 + Superpowers**：按任务实现；可测试行为按需 TDD，故障先复现与系统化调试。
+   进入 Review 前（Standard/High-risk 必需）用 verification-before-completion 或手动等效步骤实际运行检查，逐条填写 Acceptance → Evidence；本地可运行的检查必须通过，外部验证缺项注明原因和后续方式后可交 Review，补齐前不标 Done。
 5. **独立 Review**：交接任务、diff 范围、契约和证据到独立上下文；修复阻塞问题，不把建议自动扩成新需求。
 6. **Trellis Check**：核对最终 diff、验收覆盖、项目规范和命令结果；已有有效证据可复用，缺项如实记录。
-7. **Product Path Gate**：检查用户价值、产品边界、真实交接与剩余风险，未满足条件不标 Done。
-8. **Trellis 收尾**：更新任务/Journal/接续指针；按需 retro/handoff 写回已有位置；发布按授权单独决定。
+7. **Product Path Gate**：检查用户价值、产品边界、真实交接与剩余风险；新增能力须关联需求、问题证据或待验证假设，超出范围先经用户确认并更新验收；未满足条件不标 Done。
+8. **Trellis 收尾**：更新任务/Journal/接续指针；发布按授权单独决定。
+   出现返工信号（因原验收未满足从 done 重开、独立 Review 第 3 轮仍有阻塞项、同类缺陷复发；需求变更重开不算）时必须 retro，并把预防措施写进测试/CI、Gate、入口直接引用的规则或已启用的 Trellis spec，或写明不新增理由；只写 Journal 不算落实。
+   回流规则存放位置：TODO（填入口文件实际引用的位置）
 
 ## 按风险裁剪
 

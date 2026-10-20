@@ -16,8 +16,10 @@
 
 > 用 Grill with Docs 阅读 Product Spine 和相关代码，只澄清这个需求尚未解决的问题。
 > 将结果整理为当前 Trellis task：目标、不做什么、验收证据、验证方式。
-> 按这个 task 实现，按需使用 Superpowers 的 TDD、调试和完成前验证技能。
-> 自检后准备 task、diff 和证据供独立 Review。
+> 按这个 task 实现，按需使用 Superpowers 的 TDD 和调试技能。
+> 交 Review 前用 verification-before-completion 实际运行验证，逐条填写 Acceptance → Evidence；
+> 本地能跑的检查必须跑通，已知失败先修；只能事后或在外部环境验证的条目写明原因和后续验证方式。
+> 然后准备 task、diff 和证据供独立 Review；外部验证补齐前不标 done。
 
 明确的需求直接从 Trellis task 开始，不必补一次访谈仪式。
 
@@ -50,5 +52,8 @@ Trellis Check 不需要无变化地重跑所有检查，但需确认结果对应
 > 从 Trellis 当前任务、接续指针和实际 Git 状态接续；不要从过时摘要猜测进度。
 > 结束前更新现有接续位置，必要时用 handoff 辅助，不另建平行状态文档。
 
-复盘可用 retro，优先把教训变成测试/检查；允许零新增规则。
+> 检查本任务是否有返工信号（因原验收未满足从 done 重开、独立 Review 第 3 轮仍有阻塞项、同类缺陷复发；需求变更重开不算）。有的话做 retro，
+> 把预防措施写进测试/CI、Gate 或入口引用的规则，并在任务 Closeout 记录位置；不新增就写明理由。
+
+没有返工信号时复盘可选，允许零新增规则。
 通用经验脱敏后反馈 spine-kit，项目特例留在项目。
