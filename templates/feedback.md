@@ -1,6 +1,6 @@
 # 工作流反馈
 
-- spine-kit version / bundle:
+- spine-kit version / 实际 commit:
 - 使用场景（脱敏）：
 - 任务路径/工具版本：
 - 观察到的问题及复现证据：

@@ -1,54 +1,31 @@
-# 自动化与 setup 日志
+# 在目标项目中配置自动化
 
-## 已实现的自动化
+spine-kit 提供选择规则和适配要求，不提供执行程序。自动化由项目本身和已有工具承担。
+Agent 接入时先盘点，再按需要连接；不因为读了本仓库就自动安装或注册 hooks。
 
-- `setup.py plan`：只读盘点目标路径和待创建文件。
-- `setup.py apply`：复制固定工作流快照与缺失模板；保留冲突；写版本、摘要与逐步 JSONL 日志。
-- `setup.py validate`：检查 manifest、配置、项目入口、关键模板填充和 vendor 完整性。
-- `verify.py`：按显式配置执行 argv 命令（无 shell），记录成功/失败/跳过/超时与工作区指纹。
-- `setup.py finalize`：结构检查 + Agent 报告 + 当前版本检查证据，才更新 setup 完成状态。
+| 阶段 | 优先复用 | Agent 要明确什么 |
+|---|---|---|
+| 项目检查 | 已有 lint/type-check/test/build 命令与 CI | 工作目录、真实命令、成功条件、超时、已有失败 |
+| 任务上下文 | 已安装 Trellis 的项目集成 | 哪些上下文被注入、任务/检查/Journal 实际位置 |
+| 调试与验证 | 所选 Superpowers skills + 项目检查 | 触发条件、输入、证据位置，不另建控制器 |
+| Review | 独立会话/人或项目已有审查集成 | 任务、diff 范围、版本、测试证据和局限 |
+| 结束检查 | 项目现有 hook/CI（可选） | 有界执行，不拦截每个回合重复检查，不无限重试 |
+| 接续与经验 | Trellis 记录，按需 retro / handoff | 写回已有位置，不创建重复状态源 |
 
-不自动安装插件、注册 hooks、调用云 API、推送 Git、部署或改写业务代码。
+没有检查命令时按项目技术栈建立必要检查是另一个明确工作项，不凭空写一个不存在的命令。
+新项目暂无代码可以暂不配置业务测试，并在适配记录中列出何时补齐。
+已有基线失败与新增回归分开记录，不能修改测试来制造通过。
 
-接入输出示例见 [setup-example.md](setup-example.md)。
+## 配置原则
 
-## 文件约定
+- 一种检查复用同一个项目入口，避免本地、Trellis、CI 各维护一套不同命令。
+- 普通验证保持非交互、有限时、可重复；会调用真实 agent、生产接口、迁移或发送消息的操作单独说明副作用与授权。
+- 确认所用宿主/工具的当前文档，不复制不兼容 hook 格式；文档不能保证 skill 自动触发，需实际核对。
+- 先复用已有 CI，不为 spine-kit 新建一条专用 CI；没有明确需要时不添加任何 hook。
+- 证据在任务/项目既有产物中引用；不将密钥、完整会话或敏感输出写入适配记录。
 
-| 路径 | 用途 |
-|---|---|
-| `.spine/manifest.json` | schema、来源 URL、版本、Git commit/dirty、bundle hash、vendor hashes、setup 状态 |
-| `.spine/config.json` | 项目路径映射、任务 adapter、机器检查命令与工具选择 |
-| `.spine/vendor/` | 固定规则与脚本快照；不直接编辑，升级时三方比较 |
-| `.spine/setup/<run-id>.jsonl` | UTC 时间、run id、动作、相对文件路径、hash、结果；保留中断过程 |
-| `.spine/setup/report.json` | Agent 对适配完成条件的具名声明和证据；不是独立机器证明 |
-| `.spine/setup/verification.json` | 最近一次检查结果；旧执行摘要也追加到 JSONL |
+## 自动化是否就绪
 
-日志默认只含路径、hash 和状态，不含文件正文、密钥、远程请求或命令输出；人工填写 evidence 时也须脱敏。
-检查子进程 stdout/stderr 只在当前终端显示，不持久保存。需要保存业务证据时由项目另行选择脱敏文件。
-绝不能把 token 写进 argv/config；使用环境变量或宿主凭据系统。
-
-`complete` 的含义是“该配置的工作流接入完成”；不代表插件都安装、所有业务检查可用或产品已经完成。
-新项目检查可 skip，但必须有具体理由；finalize 输出会保留这些限制。
-完成后改动配置/指引需重新 validate/verify/finalize，manifest 记录的是当时完成事实，不是永远有效。
-
-## 检查配置
-
-每项含 `name`，再二选一：`argv` 字符串数组，或 `skip_reason` 非空原因。
-可配置 `timeout_seconds`（1–3600，默认 120）。命令在项目根目录运行。
-例如 Node 项目可用 `["npm", "run", "type-check"]` 和 `["npm", "test"]`；Python 项目按实际工具配置。
-检查应非交互、有限时、可重复，不含写入生产环境的动作。脚本不是沙盒，配置命令必须先审阅。
-
-## 可选 CI / hooks
-
-[CI 示例](../templates/ci/spine-checks.yml) 需接入后按项目运行时补安装步骤，再放入 `.github/workflows/`。
-示例不由 setup 自动启用；不要并行重复已有 CI。CI 只读验证并执行检查，不自动 finalize。
-宿主 hook 可以调用同一检查入口；先核对宿主文档，设置超时和有界重试，不全局拦截每个 Agent 回合。
-当前版本不附带宿主特定 hook 配置，避免假设各宿主事件/API 一致。
-
-## 已知限制
-
-单个目标同时只运行一个 setup/verify。无跨进程事务、自动 rollback 或 upgrade 子命令。
-逐文件独占创建 + 日志使中断可检测；不是整个项目的原子事务。
-verify 指纹基于 Git HEAD、已跟踪文件与非忽略未跟踪文件的内容，排除 `.spine/setup`、manifest；
-无 Git 时遍历常见源码文件树（排除常见缓存目录）。未追踪且被 Git 忽略的依赖/环境不在指纹内。
-这是过期证据检测，不是不可伪造审计。真实环境仍需任务证据与审查。
+分别报告：规则已写入 / 工具可发现 / 命令已运行 / 场景已验证。不得混写为“全部自动化完成”。
+安装版本、安装范围和必需/可选状态见 [工具清单](../tools/INSTALL.md)。
+记录示例见 [setup-example.md](setup-example.md)；日志就是 Agent 维护的适配步骤，不依赖日志程序。

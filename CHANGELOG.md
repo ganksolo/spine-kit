@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.2.0 — 2026-10-20（接入方式不兼容调整）
+
+改为 Agent 可读的工作流配置源：盘点、合并本地规则、核对、记录；无本仓库运行时依赖。
+保留熟悉工具链、按需技能、风险裁剪与经验回流；新增文字适配记录模板和模板选择指引。
+移除 setup/verify 脚本、JSON 配置模板、专用 CI 示例/仓库脚本测试 CI、旧运行器测试。
+项目规则模板自包含；安装清单不再要求为 spine-kit 安装 Python。
+0.1.x 使用方需先依 docs/maintenance.md 提取规则/命令/证据并替换引用，不能直接删除旧目录。
+旧版测试结果仅是历史；当前验证见 docs/validation.md。
+
 ## 0.1.1 — 2026-10-20
 
 依据用户反馈纠正定位：以 Product Spine / Grill with Docs / Trellis / Superpowers 的阶段用法为主线；

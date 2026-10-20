@@ -1,73 +1,58 @@
-# Skills 与 CLI 安装清单
+# Skills 与 CLI 准备清单
 
-核对日期：2026-10-16。以下是能力选择和安装入口，不保证任意宿主版本的命令相同。
-spine-kit 不自带第三方 skills、不复制其源码；使用上游许可证和更新机制。
-**默认组合是 Product Spine + Grill with Docs + Trellis + Superpowers 执行技能。安装服务于阶段分工；缺工具可临时手动执行对应职责，但必须如实记录，不能声称自动能力已就绪。**
+spine-kit 本身无需安装，也不要求 Python、专用 CLI 或项目配置目录。Agent 读取规范后，将选择写入项目本地规则和[适配记录](../templates/adoption-record.md)。
+默认组合是 Product Spine + Grill with Docs + Trellis + Superpowers 的按需执行技能；职责需要落实，工具按项目能力选择。
 
-Product Spine / Product Path Gate 是项目文档与检查表，不需要安装；Trellis 负责执行记录，Superpowers 不另建任务控制器。
+## 本机与项目各准备什么
 
-## 本机与项目的分工
-
-| 项目 | 必需性 | 安装/配置位置 | 如何验证 |
+| 能力/工具 | 何时需要 | 本机或宿主 | 项目内配置与验收 |
 |---|---|---|---|
-| Claude Code 或 Codex | 至少一个，已有则复用 | 本机宿主；使用各自官方安装方式 | 实际可启动、能读取目标项目和执行允许的命令 |
-| Git | 推荐；版本/分支追踪需要 | 本机 | `git --version`，项目 `git status` |
-| Python 3.10+ | 使用本仓库自动化必需 | 本机/CI | `python3 --version` |
-| 项目运行时与包管理器 | 依业务技术栈决定 | 本机/CI；依赖在项目 | 真实运行项目检查，不安装无关工具链 |
-| spine-kit 规则/配置 | 必需 | 业务项目 `.spine/` 及入口文件 | `setup.py validate` + report + finalize |
-| GitHub CLI (`gh`) | 可选，管理 PR/issue 时 | 本机 | `gh --version`；认证单独配置，不记 token |
-| Matt Pocock skills | 推荐按需选 Grill / retro / handoff | 宿主插件或 skills 目录，二选一 | 宿主能发现技能；用无副作用小例验证；记录版本 |
-| Superpowers | 默认执行辅助；按需调用调试/完成验证/TDD | 宿主插件或 skills 目录 | 确认具体技能可触发，没有抢占任务控制器 |
-| Trellis CLI | 默认任务工具；需要其自动能力须实际安装/验证 | CLI 本机、集成配置项目 | `trellis --help`，核对实际生成/注入能力 |
-| OpenSpec / Spec Kit | 可选替代任务/规格层 | CLI + 项目配置 | 先试验；不要并存另一套权威任务状态 |
-| Compound Engineering | 可借理念，不要求安装 | 选择其完整流程时才装 | 避免与已有实现/Review 编排重叠 |
+| Claude Code 或 Codex | 至少一种执行宿主 | 复用已有安装 | 能读取项目规则并执行允许的命令；记录实际验证范围 |
+| Product Spine / Product Path Gate | 必需职责 | 无需安装 | 适配产品边界与验收检查表 |
+| Git | 推荐，用于版本与差异 | 本机，`git --version` | 记录分支、来源 commit、实际变更；无 Git 如实注明 |
+| Grill with Docs | 需求存在未知时 | Matt Pocock skills 的宿主支持安装方式 | 读取现有文档，只澄清未决问题，结果进入任务/已有决策记录 |
+| Trellis CLI / 集成 | 默认任务与上下文工具 | 按上游要求准备 CLI 及依赖 | 核对 task/spec/journal 路径、宿主支持和实际行为；仅有目录不代表自动注入可用 |
+| Superpowers | 实现、排错、完成验证时按需 | 宿主支持的插件或 skills 安装 | 核对具体技能可发现/调用，与已有任务体系不冲突 |
+| 项目运行时、包管理器、测试工具 | 按业务技术栈 | 本机/CI | 复用真实检查命令，无业务代码时记录不适用 |
+| retro / handoff | 有复盘或交接需求时 | 可选 Matt Pocock skills | 输出回到现有任务、Journal 或接续指针，不增加平行进度表 |
+| GitHub CLI | 需要用 CLI 管理 PR/issue 时 | 可选，本机 | 核对可用性与授权范围；记录不含凭证 |
+| OpenSpec / Spec Kit | 明确决定替换任务/规格层时 | 按上游准备 | 映射到唯一任务事实源；不是默认叠加安装 |
+| Compound Engineering | 明确需要其完整工具时 | 可选 | 默认仅借经验回流方法，无需安装插件 |
 
-## 按使用顺序准备
+## 按需组合技能
 
-1. 写 Product Spine 和项目 Gate：无须安装工具。
-2. 准备 Grill with Docs：核对 Matt skills 来源与版本，沿用项目 CONTEXT/ADR 位置。
-3. 准备 Trellis：核对 CLI/宿主集成与实际 task/spec/journal 路径；已有项目先预览差异。
-4. 准备实现宿主与 Superpowers：明确按需使用哪些技能，不额外开启另一套计划/任务控制。
-5. 准备独立 Review 会话、项目检查命令，再验证 Trellis Check 和收尾方式。
-6. retro / handoff 按需添加；setup 日志脚本需要 Python，但不影响理解日常工具链。
+- 需求不清：选择 Grill with Docs；明确需求可以跳过。
+- 可测试的行为变更：按需选择 TDD；文案/格式等低风险修改不强制。
+- 故障定位：选择 systematic-debugging。
+- 声称完成前：使用 verification-before-completion 或明确的手动等效检查，必须提供证据。
+- 有值得沉淀的经验或需要交接：选择 retro / handoff；允许没有新增经验。
 
-未装技能可以按 WORKFLOW 临时人工执行相应步骤，记录缺项；不要把“手动做完”写成“工具安装成功”。
+安装整个技能包不代表每个任务都调用全部技能。检查包的自动触发行为是否与本地规则冲突；不能假定任意版本均支持按技能禁用。已有复制版与插件版先查重，避免不同版本同时生效。
 
-## 安装操作
+## 准备与验收顺序
 
-仅安装选择的项目；现有安装先核对来源、版本、自定义修改与重复副本。基础 setup 不自动安装以下工具。
+1. 先盘点已有宿主、技能、CLI、项目规则和来源版本；可用的直接复用。
+2. 根据本次适配需要选能力，记录 required / optional / not-selected 及安装范围。
+3. 实际安装时读取上游对应宿主的当前说明，核对依赖与命令；不把历史示例当作最新命令。不在适配过程中默认升级所有工具。
+4. 会改写项目的初始化先查看行为与差异，合并既有规则；不覆盖原任务历史。
+5. 分开记录“已安装”“宿主能发现”“实际调用已验证”。使用最小安全案例验证选中的能力，不以 README 声明代替结果。
+6. 在适配记录中写清缺项、证据、替代方式和下一步。只读适配无需自动安装外部工具。
 
-- Matt skills：官方 README 提供各宿主插件入口。Claude Code 示例为
-  `claude plugin install mattpocock-skills@claude-plugins-official`；可编辑文件方式为
-  `npx skills@latest add mattpocock/skills`（交互选择宿主/技能）。插件与复制版二选一。
-  不假设已有复制文件会自动更新；插件更新行为也应按宿主设置实测。
-- Superpowers：按 [上游安装说明](https://github.com/obra/superpowers) 选择 Claude/Codex 对应入口；
-  全量安装前阅读 bootstrap 的自动触发规则。项目限制只使用局部技能时先测试是否生效，不承诺所有版本都可选择性禁用。
-- Trellis：官方当前入口 `npm install -g @mindfoldhq/trellis@latest`，在试验项目执行 `trellis init`。
-  正式使用应记录实际版本，可将 `@latest` 换为已核实版本；不要直接对已有项目无审查 init。
-- OpenSpec / Spec Kit：本版本不推荐默认安装；按下方来源选择，仅在替换任务层的明确决策后配置。
+required 能力缺失且没有认可的替代方案时，相应接入保持 partial/blocked。optional 未选择不阻塞。
+可按 WORKFLOW 手动执行相应职责；例如手工维护 Trellis 结构，不得宣称已启用 CLI 自动注入或自动收尾。
+插件是否自动更新取决于宿主配置，必须实测；本仓库不承诺安装后自动追踪上游。
 
-如安装命令与宿主实际帮助不一致，以宿主当前文档为准并记录，不猜测。
-不自动创建新的 GLOSSARY：项目已有 CONTEXT/术语表时映射既有路径。
+## 上游安装入口
 
-## 安装验收账本（填写在项目 setup report 或任务中）
+以下提供入口，不对当前版本号、安装命令或宿主兼容性作未经验证的保证。实际安装时核验并记录。
 
-| 能力 | required/optional | installed/missing/unknown/not-selected | 来源/版本/范围 | 验证证据 | 后续动作 |
-|---|---|---|---|---|---|
-
-required 缺失会阻塞相应能力；optional 不选不阻塞 setup。只有明确依赖某可选技能时它才成为本项目 required。
-将选择写入 `.spine/config.json` 的 tools。该字段记录选择，脚本不验证宿主内部安装状态，由 Agent 提供证据。
-
-## 上游来源
-
-- [Codex 项目指引](https://developers.openai.com/codex/guides/agents-md)
-- [Codex skills](https://developers.openai.com/codex/skills)
-- [Claude Code memory](https://code.claude.com/docs/en/memory)
 - [Matt Pocock skills](https://github.com/mattpocock/skills)
 - [Superpowers](https://github.com/obra/superpowers)
 - [Trellis](https://github.com/mindfold-ai/Trellis)
+- [Codex skills](https://developers.openai.com/codex/skills)
+- [Claude Code 文档](https://code.claude.com/docs/en/overview)
 - [OpenSpec](https://github.com/Fission-AI/OpenSpec)
 - [Spec Kit](https://github.com/github/spec-kit)
 - [Compound Engineering](https://github.com/EveryInc/compound-engineering-plugin)
 
-这些来源是能力/安装说明，不是不同框架优劣的基准测试。升级后用项目任务验证收益，不自动追随最新版。
+这些入口不是框架效果的基准测试。升级后用真实任务观察收益，不自动追随最新版。

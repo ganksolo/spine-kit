@@ -1,6 +1,6 @@
 # 0001 — spine-kit 首版
 
-Status: In Review（实现与本地检查完成；独立 Review 和真实项目试点尚未执行）
+Status: Superseded（2026-10-20，由 0003 接替；以下保留当时范围和验证事实）
 
 ## Objective
 

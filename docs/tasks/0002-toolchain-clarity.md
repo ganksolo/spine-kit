@@ -1,6 +1,6 @@
 # 0002 — 恢复以熟悉工具为主线的工作流说明
 
-Status: In Review
+Status: Superseded（2026-10-20，由 0003 接替；以下保留当时范围和验证事实）
 
 ## Objective
 

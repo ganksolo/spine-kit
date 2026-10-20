@@ -15,7 +15,7 @@ Product Spine（项目方向）
 → Trellis 收尾（task、Journal、经验）
 ```
 
-spine-kit 记录这套工具组合的用法与交接；setup 脚本只负责接入配套。
+spine-kit 是 Agent 读取的配置规范；由 Agent 按 ADOPT 将规则适配到项目本地，不需要执行本仓库程序。
 Product Spine 在项目启动/方向变化时维护，不必每个任务重写。
 
 ## 1. Product Spine 定方向，Grill with Docs 澄清当前需求

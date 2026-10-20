@@ -1,63 +1,62 @@
 # spine-kit
 
-**把 Product Spine、Grill with Docs、Trellis、Superpowers 组合起来的项目使用手册与接入包。**
+**供 Agent 读取并适配到项目内的工作流配置规范。** 面向一个人或 2–3 人，使用 Claude Code / Codex 开发。
 
-面向一个人或 2–3 人，使用 Claude Code / Codex 开发。你继续使用熟悉的工具；本仓库说明每个工具何时使用、输入输出如何交接，以及怎样把实践经验带到下一个项目。
+你让 Agent 读取本仓库；Agent 理解工作流、检查目标项目，再生成或调整项目自己的 AGENTS.md、CLAUDE.md、WORKFLOW.md、任务和验收规则。日常开发遵循项目内的规则，无需运行 spine-kit，也无需持续联网读取本仓库。
 
-## 先记住这条主线
+## 我们沿用的工具链
 
 ```text
 Product Spine：确定项目主线
     ↓
-Grill with Docs：澄清这次需求（有关键未知时）
+Grill with Docs：有关键未知时澄清当前需求
     ↓
-Trellis：创建任务，组织上下文并跟踪执行
+Trellis：建立任务，组织上下文，贯穿执行与记录
     ↓
-Claude Code / Codex + Superpowers：实现、调试、自检
+Claude Code / Codex + Superpowers：按任务实现、调试、自检
     ↓
-独立 Review：另一个上下文检查实现
+独立 Review
     ↓
 Trellis Check：核对任务验收与检查结果
     ↓
 Product Path Gate：确认结果符合产品主线
     ↓
-Trellis 收尾：更新任务、Journal，沉淀必要经验
+Trellis 收尾：更新任务/Journal，回流必要经验
 ```
 
-**Trellis 贯穿任务执行；Superpowers 提供按需执行技能。** 不让两个工具各管一份任务或重复指挥执行。
-Product Spine 在项目启动和方向变化时维护，不是每项任务都重新写。范围明确的小修复可以跳过 Grill，简记任务后直接修复验证。
+Trellis 管任务；Superpowers 按需提供执行技能，不再建立另一份任务状态。
+产品主线不必每个任务重写；明确的小修复可跳过 Grill；复盘允许零新增规则。
 
-## 怎么读
-
-1. [WORKFLOW.md](WORKFLOW.md)：按阶段说明什么时候用哪个工具。
-2. [工具分工与交接](docs/layers.md)：每层的输入、输出和职责边界。
-3. [日常使用示例](docs/playbook.md)：从新项目、新功能、修 Bug 到 Review 和收尾。
-4. [安装清单](tools/INSTALL.md)：哪些是文档、哪些技能/CLI 需要安装。
-
-要将这套组合接入其他项目时，再读 [ADOPT.md](ADOPT.md)。版本、setup 日志和脚本属于接入配套，不是日常开发的新阶段。
-
-## 给另一个项目的 Agent
+## 给目标项目 Agent 的指令
 
 ```text
-请读取 https://github.com/ganksolo/spine-kit 的 README.md、WORKFLOW.md 和 ADOPT.md。
-把 Product Spine → Grill with Docs → Trellis → Superpowers 辅助实现 → 独立 Review
-→ Trellis Check → Product Path Gate → Trellis 收尾这套组合适配到当前项目。
-先盘点已有文件和工具，保留已有规则与任务；不要重构业务代码。
-确认 Trellis 实际任务路径，避免生成第二套任务系统。
-固定并记录读取的版本/commit；按 ADOPT 记录接入步骤、工具缺项、验证与未完成项。
+请读取 https://github.com/ganksolo/spine-kit 的 README.md、WORKFLOW.md 和 ADOPT.md，
+按其中规范适配当前项目的开发流程。
+这是流程配置，不是业务代码重构。先检查已有规则、任务、技术栈和工具，保留有效约定，合并冲突并补齐缺项。
+让项目自己的 AGENTS.md / CLAUDE.md 指向本地规则，日常工作不依赖 spine-kit 的程序或远程文档。
+记录参考版本/实际 commit、适配过程、改动、验证、工具缺项和项目例外。
+缺少关键产品决定时询问，不编造；最后报告适配是否完成以及未完成项。
 ```
 
-没有某个工具时说明缺项和临时手动方式，不能声称已获得该工具的自动能力。
-已有其他任务体系时先明确映射/迁移决定，不自动重写历史或安装第二套控制器。
+先读取 [ADOPT.md](ADOPT.md) 执行。新项目建立最小必要规则；已有项目渐进合并，不能直接覆盖指引或搬迁全部历史。
+本仓库不需要安装。使用哪些第三方 skills / CLI，由目标项目选择与验证；见 [安装清单](tools/INSTALL.md)。
 
-## 配套接入能力
+## 阅读顺序
 
-[自动化说明](docs/automation.md) 提供 plan/apply/validate/verify/finalize；仅用 Python 3.10+ 标准库。
-脚本保留已有文件，记录来源版本与 setup 细节。它不安装 Trellis/skills，不会自动执行整条开发链。
-项目保存固定工作流快照，不需要每次联网读取最新版本。只有浏览能力的 Agent 可以提出方案，不能声称已写入项目。
+1. [WORKFLOW.md](WORKFLOW.md)：各工具在什么阶段使用。
+2. [docs/layers.md](docs/layers.md)：工具分工、输入输出和交接。
+3. [ADOPT.md](ADOPT.md)：Agent 如何将规范转成目标项目规则。
+4. [docs/playbook.md](docs/playbook.md)：日常开发指令。
 
-- [升级与撤销](docs/maintenance.md)
-- [实践反馈回流](feedback/README.md)
-- [验证记录与局限](docs/validation.md)
+配套材料：
+- [templates/README.md](templates/README.md)：选择、合并模板的方式，不要求全量复制。
+- [适配记录模板](templates/adoption-record.md) 与 [示例](docs/setup-example.md)：版本、步骤、完成证据。
+- [项目自动化建议](docs/automation.md)：复用项目检查、Trellis 和可选 CI/hooks。
+- [维护与旧版迁移](docs/maintenance.md)：比较规范变化，按项目决定采用。
+- [经验回流](feedback/README.md)：项目改进如何反馈本仓库。
+- [验证范围](docs/validation.md)：区分文档检查和真实项目试点。
 
-当前 0.1.1 修正首版的定位和表达；独立 Review、真实业务项目试点情况见验证记录。
+## 当前版本
+
+0.2.0 将接入机制改为文字协议与模板，不再提供安装器、验证运行器或要求项目建立专用配置目录。
+版本与 commit 用于追溯参考来源，不会自动替目标项目升级。0.1.x 已接入项目请先读迁移说明，不要直接删除旧文件。

@@ -1,42 +1,42 @@
-# 接入报告示例（说明性，非真实运行结果）
+# 适配记录示例
 
-业务项目接入结束时，Agent 输出类似：
+以下为说明性示例，不是真实项目执行结果。记录放在项目已有流程任务/接入文档中即可。
+
+## 已有项目：沿用 Trellis
 
 ```text
-来源：spine-kit 0.1.0，commit=<实际 SHA>，bundle=<实际摘要>
-状态：needs-adaptation
-已完成：固定规则快照；沿用 .trellis/tasks；保留原有 AGENTS.md。
-未完成：AGENTS.md 尚未合并入口；真实测试命令尚未配置。
-工具：Python/Git 已验证；Grill optional 未选择；不需要先安装完整 Trellis。
-日志：.spine/setup/<实际 run-id>.jsonl
-下一步：合并入口与配置检查 → validate → verify → 填写 report → finalize。
-业务改动/部署：无。
+参考：spine-kit 0.2.0；实际 commit=<读取时核实的 SHA>
+目标：保留现有任务和技术栈，合并按需技能与验收规则。
+状态：partial
+
+规则映射：
+- 产品主线：PRODUCT_SPINE.md
+- 工作流：WORKFLOW.md
+- 当前任务：沿用实际 Trellis task 路径（已核实）
+- 检查：沿用 package.json 中已存在的 type-check / test 命令
+
+步骤：
+1. 读取已有 AGENTS/CLAUDE/Trellis 记录；记录未提交修改，未改动它们。
+2. 合并 WORKFLOW：明确 Grill 使用条件、Superpowers 执行边界。
+3. AGENTS 与 CLAUDE 已指向本地规则；链接核对通过。
+4. Superpowers 技能可用性尚未核实；暂未决定手动替代，记为待处理。
+
+下一步：核实必需能力或确认手动替代，再走查一个需求到验收的路径。
+未做：业务代码修改、生产调用、独立新会话试用。
 ```
 
-示例 JSONL 事件（脚本实际输出含 UTC 时间与 run_id）：
+## 新项目：尚无业务代码
 
-```json
-{"event":"apply-start","version":"0.1.0","bundle":"<hash>"}
-{"event":"file-planned","path":"AGENTS.md","action":"preserve","sha256":"<candidate-hash>"}
-{"event":"file-result","path":"AGENTS.md","action":"preserve","sha256":"<candidate-hash>"}
-{"event":"apply-finished","status":"needs-adaptation"}
+```text
+参考：spine-kit 0.2.0；实际 commit=<读取时核实的 SHA>
+状态：complete（仅指已约定范围的规则适配）
+产品目标与边界已由用户确认并写入 Product Spine。
+项目入口、本地工作流、任务约定与 Gate 已建立，路径核对和文本场景走查通过。
+Trellis CLI 尚未安装：用户明确采用手动任务约定，未宣称自动注入能力。
+Grill / Superpowers 尚未安装：以已记录的人工步骤替代；安装为后续可选增强。
+尚无业务代码：测试命令不适用；首个实现任务负责配置技术栈检查。
+未验证：技能自动触发、真实应用运行、新会话自动遵循效果。
 ```
 
-日志中的 preserve hash 是候选模板 hash，不代表原有文件已合并。Agent 必须核对实际内容。
-finalize 完成后，报告应列出 skip 的检查及原因，不把“工作流就绪”说成“业务已验证”。
-
-## 已有 Trellis 项目配置
-
-从 templates/config.json 复制配置，只把 task_source 改为：
-
-```json
-{"kind":"local","location":".trellis/tasks"}
-```
-
-其余 paths 映射现有 Product Spine、工作流和接续位置；现有内容不会自动替换。
-CLI 是否安装是另一件事，不能从 `.trellis/tasks` 目录存在推断。
-
-## 工具版本记录建议
-
-在 report 的 tool_inventory 记录 name、required、status、version、scope、evidence。
-无法查证填写 unknown；必需能力缺失则 tools 项不能标 passed。选择 built-in 能力时无需安装同名 skill。
+complete 必须以实际核对和已明确的替代方式为依据，不能用这段示例文字代替执行。
+模板见 [adoption-record.md](../templates/adoption-record.md)。
