@@ -7,11 +7,11 @@
 | Product Spine | 项目启动或产品方向变化 | 用户问题、已有产品资料 | 产品目标、核心路径、non-goals → 所有后续环节 |
 | Grill with Docs | 当前需求有重要未知或冲突 | Spine、相关文档和代码、需求 | 确认的范围/取舍/验收 → Trellis；稳定决策写 CONTEXT/必要 ADR |
 | Trellis | 需求明确后至任务结束 | 已确认需求和项目规范 | 当前 task、实施上下文、状态 → 实现者和审查者 |
-| Superpowers + 实现 Agent | 实现、出现 Bug、准备提交审查时 | 当前 Trellis task 和相关规范 | 代码、测试、自检证据 → 独立 Review |
+| Superpowers + 实现 Agent | 实现、出现 Bug、准备提交审查时 | 当前 Trellis task 和相关规范 | 代码、测试、逐条填写的 Acceptance → Evidence（自检门槛）→ 独立 Review |
 | 独立 Review | 实现并自检后 | task、diff、契约、测试证据 | 阻塞项/建议 → 实现者修复；审查结论 → Trellis Check |
 | Trellis Check | Review 修复完成后 | 最终 diff、task、审查记录 | 验收覆盖、检查结果、缺项 → Product Path Gate |
-| Product Path Gate | 标记任务完成前 | Spine、验收结果、剩余风险 | PASS/FAIL/NOT-READY → Trellis 收尾 |
-| Trellis 收尾 | 任务完成或会话中断 | 实际状态、证据、下一步 | task / Journal / 接续指针；通用经验反馈 spine-kit |
+| Product Path Gate | 标记任务完成前 | Spine、验收结果、剩余风险 | PASS/FAIL/NOT-READY；新增能力有需求/证据/假设依据，超范围已确认 → Trellis 收尾 |
+| Trellis 收尾 | 任务完成或会话中断 | 实际状态、证据、下一步、返工信号 | task / Journal / 接续指针；有返工信号时预防措施写入测试/Gate/入口规则；通用经验反馈 spine-kit |
 
 ## Trellis 管执行记录，Superpowers 帮助执行
 
