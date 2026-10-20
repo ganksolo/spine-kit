@@ -1,28 +1,38 @@
-# 分层职责与工具选择
+# 工具分工与阶段交接
 
-| 层 | 输入 → 输出 | 默认负责者 / 工具 | 边界 |
+这张表是 spine-kit 的核心：知道什么时候用哪个熟悉的工具，而非学习新的分层术语。
+
+| 工具/环节 | 何时使用 | 输入 | 输出交给谁 |
 |---|---|---|---|
-| 产品约束 | 用户问题 → Product Spine | 人做产品决定，Agent 帮助提炼 | 不以功能清单替代核心用户路径 |
-| 澄清 | 已有文档、代码、未知项 → 决策/任务边界 | Grill with Docs 或等效对话；必要时 Superpowers brainstorming | 一次只启用一个澄清主流程，避免重复访谈 |
-| 任务 | 已定范围 → 一份契约和状态 | 项目既有 Trellis/issue；新项目默认本地任务文件 | 不同时维护 Spec Kit、OpenSpec、Trellis 三份任务状态 |
-| 实现 | 契约 → 小改动、测试 | Claude Code / Codex；按需 TDD、systematic-debugging | 默认一个实现会话；不强制子代理 |
-| 机器验证 | 改动/检查配置 → 命令结果 | verify.py、项目测试、可选 CI | 自动检查不等于产品验收 |
-| 独立审查 | 契约、diff、证据 → 阻塞项/风险 | 独立上下文或另一人 | 不能只复述实现者总结；角色不绑定品牌 |
-| 产品验收 | 条款和证据 → Done / 未完成 | 项目 Gate、人决定关键取舍 | 分清已验证、已合并、已上线 |
-| 沉淀接续 | 实际故障和证据 → 测试/规范/短接续记录 | retro / handoff 或等效步骤 | 允许零新规则；项目数据不自动上传 |
+| Product Spine | 项目启动或产品方向变化 | 用户问题、已有产品资料 | 产品目标、核心路径、non-goals → 所有后续环节 |
+| Grill with Docs | 当前需求有重要未知或冲突 | Spine、相关文档和代码、需求 | 确认的范围/取舍/验收 → Trellis；稳定决策写 CONTEXT/必要 ADR |
+| Trellis | 需求明确后至任务结束 | 已确认需求和项目规范 | 当前 task、实施上下文、状态 → 实现者和审查者 |
+| Superpowers + 实现 Agent | 实现、出现 Bug、准备提交审查时 | 当前 Trellis task 和相关规范 | 代码、测试、自检证据 → 独立 Review |
+| 独立 Review | 实现并自检后 | task、diff、契约、测试证据 | 阻塞项/建议 → 实现者修复；审查结论 → Trellis Check |
+| Trellis Check | Review 修复完成后 | 最终 diff、task、审查记录 | 验收覆盖、检查结果、缺项 → Product Path Gate |
+| Product Path Gate | 标记任务完成前 | Spine、验收结果、剩余风险 | PASS/FAIL/NOT-READY → Trellis 收尾 |
+| Trellis 收尾 | 任务完成或会话中断 | 实际状态、证据、下一步 | task / Journal / 接续指针；通用经验反馈 spine-kit |
 
-## 默认组合
+## Trellis 管执行记录，Superpowers 帮助执行
 
-spine-kit 管通用流程；项目一个 task 系统管当前任务；宿主 Agent 执行；独立上下文审查。
-Grill、Superpowers 的局部技能是可选能力，缺少它们不影响基础流程运行。
+Trellis 负责 task、上下文、check 和 journal，不自行决定产品方向。
+Superpowers 按需提供 `test-driven-development`、`systematic-debugging`、`verification-before-completion` 等执行纪律。
+不要在已有 Trellis task 之外让 Superpowers 再维护一份同义任务状态。
+它的完整计划/子代理执行模式不默认开启；如果项目明确选择，需指定谁拥有任务状态、执行控制和收尾。
 
-Matt `to-spec` / `to-tickets` 只有能直接写入选定任务源时才使用；不要让其创建另一套任务。
-Superpowers Native execution / 子代理执行只在明确选用其执行管理后开启；不能与另一个控制器相互递归。
-完整 Trellis 适合需要精选上下文注入的项目，先试验并对照已有入口，不能假设目录约定已获得该能力。
-OpenSpec / Spec Kit 可作为任务/规格层替代方案，接入时改 adapter 和规则；不默认叠加。
-Compound Engineering 借鉴经验回流；不要求安装整套插件。
+需求澄清默认使用 Grill with Docs，已有结论不重复跑 Superpowers brainstorming。
+Product Spine 是文档；Product Path Gate 是检查表；它们不需要安装 CLI。
+Trellis 目录/手动模板不等于完整 Trellis CLI 与自动注入能力。实际安装与集成必须验证。
 
-## 模型和预算
+## 角色和扩展
 
-按任务表现选择实现者/审查者；独立上下文比品牌分工更重要。不要在规范中固定“最新模型”。
-并行前确认能独立拆分、集成方式和预算；没有必要就串行。两轮重复争议应转向复现和契约，而非继续堆审查者。
+可以保留 Claude Code 实现、Codex Review 的习惯，也可以互换；独立上下文不可由实现者自查冒充。
+默认一个实现会话；有独立子任务和明确收益才并行，不因团队有 2–3 人就引入复杂代理团队。
+`retro` / `handoff` 可辅助 Trellis 收尾，产物回到已有记录，不能新建另一份“最新进度”。
+OpenSpec / Spec Kit 不在默认链路中；已有项目使用它们时先决定任务层映射/替换，不默认叠加。
+Compound Engineering 借鉴经验回流，无需为复盘额外安装整套框架。
+
+## 用户在哪些地方参与
+
+确定产品方向；回答会改变产物的关键问题；判断验收结果是否有用；决定需要其授权的发布/不可逆动作。
+常规实现、自检和记录由 Agent 在授权范围内推进，不要求用户手动指挥每个步骤。

@@ -1,5 +1,8 @@
 # Agent 接入协议
 
+先理解 WORKFLOW 中的工具链：Product Spine → Grill with Docs → Trellis → Superpowers 辅助实现
+→ 独立 Review → Trellis Check → Product Path Gate → Trellis 收尾。以下步骤只是把这套组合接入项目。
+
 ## 任务性质与授权范围
 
 你正在将 spine-kit 的开发工作流适配到一个业务项目。你不是实现业务需求，也不是重写整个项目。
@@ -26,7 +29,10 @@
 确认项目类型、任务事实源、规范路径、角色偏好、检查命令、可选 skills、触及生产的边界。
 默认模板路径可由 JSON 配置覆盖。已有 `.trellis/tasks` 或 issue 时映射过去，不搬历史。
 复制 `templates/config.json` 到临时位置并按需修改，使用 `--config /path/to/config.json`。
-任务类型 `local` 需要 task_root；`external` 需要 location（真实 issue 项目地址）；禁止创建第二个状态账本。
+默认任务层是 Trellis。确认其实际安装版本和已有 task 路径，再映射配置；不要假设所有版本目录格式相同。
+脚本的通用模板默认 `docs/workflow/tasks` 只是占位选择；使用 Trellis 时必须改为项目实际任务位置。
+只有手动采用目录/任务约定时，报告中明确“手动 Trellis 约定，未验证 CLI/自动注入”，不能称完整工具已接入。
+任务类型 `local` 的 `location` 填本地任务目录；`external` 需要 location（真实 issue 项目地址）；禁止创建第二个状态账本。
 
 ```bash
 python3 /path/to/spine-kit/scripts/setup.py plan --target /path/to/project --config /path/to/config.json

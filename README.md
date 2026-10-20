@@ -1,51 +1,63 @@
 # spine-kit
 
-面向 **1–3 人 + Claude Code / Codex** 的可复用开发工作流。
+**把 Product Spine、Grill with Docs、Trellis、Superpowers 组合起来的项目使用手册与接入包。**
 
-这个仓库帮助新项目建立流程、帮助已有项目渐进调整流程。它提供产品约束、按风险分级的任务路径、技能分工、验证与 Review、跨会话接续和反馈回流。它不是业务项目模板，不生成业务功能，也不是必须全量安装的 Agent 框架。
+面向一个人或 2–3 人，使用 Claude Code / Codex 开发。你继续使用熟悉的工具；本仓库说明每个工具何时使用、输入输出如何交接，以及怎样把实践经验带到下一个项目。
 
-**给读取本仓库的 Agent：先读 [ADOPT.md](ADOPT.md)。用户要求“接入工作流”时，只调整开发流程；不顺便重构业务代码，不安装外部服务，不把本仓库的维护任务复制进业务项目。**
-
-## 从这里开始
-
-- 接入新项目或已有项目：[ADOPT.md](ADOPT.md)
-- 完整流程与任务分级：[WORKFLOW.md](WORKFLOW.md)
-- 分层职责、工具边界：[docs/layers.md](docs/layers.md)
-- 安装清单（全局 / 项目 / 可选）：[tools/INSTALL.md](tools/INSTALL.md)
-- 自动化、setup 日志、完成条件：[docs/automation.md](docs/automation.md)
-- 日常使用：[docs/playbook.md](docs/playbook.md)
-- 升级与撤销：[docs/maintenance.md](docs/maintenance.md)
-- 实践反馈：[feedback/README.md](feedback/README.md)
-
-## 给另一个项目的启动提示
+## 先记住这条主线
 
 ```text
-请读取 https://github.com/ganksolo/spine-kit 的 README.md 和 ADOPT.md，
-将指定的 tag 或 commit 对应工作流适配到当前项目。若未指定，先解析并记录实际 commit。
-这是开发流程接入，不是业务功能重构。
-先检查现有指引、任务系统、技术栈、检查命令和工作区状态，给出适配计划。
-保留已有文件和任务事实，明确冲突；用 setup 日志记录步骤与版本。
-接入后运行验证，报告完成项、未完成项、工具安装需求和接续方式。
-不要把复制模板或安装插件称为 setup 完成。
+Product Spine：确定项目主线
+    ↓
+Grill with Docs：澄清这次需求（有关键未知时）
+    ↓
+Trellis：创建任务，组织上下文并跟踪执行
+    ↓
+Claude Code / Codex + Superpowers：实现、调试、自检
+    ↓
+独立 Review：另一个上下文检查实现
+    ↓
+Trellis Check：核对任务验收与检查结果
+    ↓
+Product Path Gate：确认结果符合产品主线
+    ↓
+Trellis 收尾：更新任务、Journal，沉淀必要经验
 ```
 
-Agent 有本地文件能力时应先将指定版本检出到独立目录；只有浏览能力时，可阅读和提出方案，但不能声称已经接入项目。离线可使用本地固定快照。
+**Trellis 贯穿任务执行；Superpowers 提供按需执行技能。** 不让两个工具各管一份任务或重复指挥执行。
+Product Spine 在项目启动和方向变化时维护，不是每项任务都重新写。范围明确的小修复可以跳过 Grill，简记任务后直接修复验证。
 
-## 最小依赖与快速预览
+## 怎么读
 
-基础工作流无需第三方 skills。自动化脚本仅使用 Python 3.10+ 标准库；Git 用于版本追踪。
+1. [WORKFLOW.md](WORKFLOW.md)：按阶段说明什么时候用哪个工具。
+2. [工具分工与交接](docs/layers.md)：每层的输入、输出和职责边界。
+3. [日常使用示例](docs/playbook.md)：从新项目、新功能、修 Bug 到 Review 和收尾。
+4. [安装清单](tools/INSTALL.md)：哪些是文档、哪些技能/CLI 需要安装。
 
-```bash
-python3 /path/to/spine-kit/scripts/setup.py plan --target /path/to/project
-python3 /path/to/spine-kit/scripts/setup.py apply --target /path/to/project
+要将这套组合接入其他项目时，再读 [ADOPT.md](ADOPT.md)。版本、setup 日志和脚本属于接入配套，不是日常开发的新阶段。
+
+## 给另一个项目的 Agent
+
+```text
+请读取 https://github.com/ganksolo/spine-kit 的 README.md、WORKFLOW.md 和 ADOPT.md。
+把 Product Spine → Grill with Docs → Trellis → Superpowers 辅助实现 → 独立 Review
+→ Trellis Check → Product Path Gate → Trellis 收尾这套组合适配到当前项目。
+先盘点已有文件和工具，保留已有规则与任务；不要重构业务代码。
+确认 Trellis 实际任务路径，避免生成第二套任务系统。
+固定并记录读取的版本/commit；按 ADOPT 记录接入步骤、工具缺项、验证与未完成项。
 ```
 
-`plan` 不写文件。`apply` 只创建缺失文件，保留已有文件并记录冲突；默认状态是 `needs-adaptation`。接下来按 ADOPT 补齐项目内容、现有指引入口和验证配置，再完成 setup。执行写入前应符合目标目录权限与用户授权。
+没有某个工具时说明缺项和临时手动方式，不能声称已获得该工具的自动能力。
+已有其他任务体系时先明确映射/迁移决定，不自动重写历史或安装第二套控制器。
 
-每个业务项目保存 `.spine/manifest.json` 和仓库内的工作流快照，不依赖每次联网读取最新规则。setup 日志位于 `.spine/setup/`。版本与内容摘要均被记录。
+## 配套接入能力
 
-## 第一版边界
+[自动化说明](docs/automation.md) 提供 plan/apply/validate/verify/finalize；仅用 Python 3.10+ 标准库。
+脚本保留已有文件，记录来源版本与 setup 细节。它不安装 Trellis/skills，不会自动执行整条开发链。
+项目保存固定工作流快照，不需要每次联网读取最新版本。只有浏览能力的 Agent 可以提出方案，不能声称已写入项目。
 
-提供可运行的 setup、结构验证、检查命令执行和完成记录；不自动安装 skills，不自动配置宿主 hooks，不自动 merge / push / deploy，不自动更新已接入项目。升级使用人工审查的差异合并。
+- [升级与撤销](docs/maintenance.md)
+- [实践反馈回流](feedback/README.md)
+- [验证记录与局限](docs/validation.md)
 
-0.1.0 是首个试用版本。脚本的临时项目测试不等于真实业务项目试点；试点情况见 [验证记录](docs/validation.md)。
+当前 0.1.1 修正首版的定位和表达；独立 Review、真实业务项目试点情况见验证记录。

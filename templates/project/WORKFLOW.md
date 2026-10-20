@@ -3,6 +3,10 @@
 遵循 `.spine/vendor/WORKFLOW.md`；分层说明见 `.spine/vendor/docs/layers.md`。
 项目路径、任务事实源与检查命令以 `.spine/config.json` 为准。
 
+默认主线：Product Spine → Grill with Docs（需要时）→ Trellis task → Superpowers 辅助实现
+→ 独立 Review → Trellis Check → Product Path Gate → Trellis 收尾。
+Trellis 贯穿任务执行；配置应映射实际任务位置。setup 只是初次接入配套。
+
 ## 项目适配
 
 - 技术栈与运行方式：TODO

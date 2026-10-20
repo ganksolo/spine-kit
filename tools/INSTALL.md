@@ -2,7 +2,9 @@
 
 核对日期：2026-10-16。以下是能力选择和安装入口，不保证任意宿主版本的命令相同。
 spine-kit 不自带第三方 skills、不复制其源码；使用上游许可证和更新机制。
-**基础流程无需额外 skill；选择一个任务管理中心，避免整套框架叠加。**
+**默认组合是 Product Spine + Grill with Docs + Trellis + Superpowers 执行技能。安装服务于阶段分工；缺工具可临时手动执行对应职责，但必须如实记录，不能声称自动能力已就绪。**
+
+Product Spine / Product Path Gate 是项目文档与检查表，不需要安装；Trellis 负责执行记录，Superpowers 不另建任务控制器。
 
 ## 本机与项目的分工
 
@@ -15,16 +17,21 @@ spine-kit 不自带第三方 skills、不复制其源码；使用上游许可证
 | spine-kit 规则/配置 | 必需 | 业务项目 `.spine/` 及入口文件 | `setup.py validate` + report + finalize |
 | GitHub CLI (`gh`) | 可选，管理 PR/issue 时 | 本机 | `gh --version`；认证单独配置，不记 token |
 | Matt Pocock skills | 推荐按需选 Grill / retro / handoff | 宿主插件或 skills 目录，二选一 | 宿主能发现技能；用无副作用小例验证；记录版本 |
-| Superpowers | 可选，优先调试/完成验证/TDD | 宿主插件或 skills 目录 | 确认具体技能可触发，没有抢占任务控制器 |
-| Trellis CLI | 可选，需要完整上下文注入时试验 | CLI 本机、集成配置项目 | `trellis --help`，核对实际生成/注入能力 |
+| Superpowers | 默认执行辅助；按需调用调试/完成验证/TDD | 宿主插件或 skills 目录 | 确认具体技能可触发，没有抢占任务控制器 |
+| Trellis CLI | 默认任务工具；需要其自动能力须实际安装/验证 | CLI 本机、集成配置项目 | `trellis --help`，核对实际生成/注入能力 |
 | OpenSpec / Spec Kit | 可选替代任务/规格层 | CLI + 项目配置 | 先试验；不要并存另一套权威任务状态 |
 | Compound Engineering | 可借理念，不要求安装 | 选择其完整流程时才装 | 避免与已有实现/Review 编排重叠 |
 
-## 建议的三种配置
+## 按使用顺序准备
 
-1. **Minimal（默认）**：宿主 Agent + Git + Python + 本仓库。内置对话澄清、独立新上下文 Review、手动短复盘。
-2. **Assisted**：Minimal + 按需 Matt Grill/retro/handoff + Superpowers 调试/验证技能。明确覆盖规则与触发方式。
-3. **Managed（试验）**：选定完整 Trellis 等管理工具，映射其 task/spec/journal，停用重复状态和控制器。
+1. 写 Product Spine 和项目 Gate：无须安装工具。
+2. 准备 Grill with Docs：核对 Matt skills 来源与版本，沿用项目 CONTEXT/ADR 位置。
+3. 准备 Trellis：核对 CLI/宿主集成与实际 task/spec/journal 路径；已有项目先预览差异。
+4. 准备实现宿主与 Superpowers：明确按需使用哪些技能，不额外开启另一套计划/任务控制。
+5. 准备独立 Review 会话、项目检查命令，再验证 Trellis Check 和收尾方式。
+6. retro / handoff 按需添加；setup 日志脚本需要 Python，但不影响理解日常工具链。
+
+未装技能可以按 WORKFLOW 临时人工执行相应步骤，记录缺项；不要把“手动做完”写成“工具安装成功”。
 
 ## 安装操作
 
