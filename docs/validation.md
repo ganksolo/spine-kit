@@ -1,5 +1,13 @@
 # 验证记录
 
+## 0.4.0（2026-10-26）
+
+范围：Trellis 接入决策（任务 [0005](tasks/0005-trellis-adoption-decision.md)）。
+- 相对链接与锚点检查、`git diff --check`：通过。
+- 场景走查（实现者自查）：未装 CLI 且用户未表态 → 不安装、不 init，手动模式，partial；用户明确选手动 → complete；用户同意安装 → 先说明全局包、init 写入文件与撤销方式；已装 CLI → 先实测能力再写规则。
+- 上游 CLI 能力描述来自 2026-10-26 读取的 Trellis README，未实际安装或运行 CLI。
+独立 Review、真实项目试点：未执行。
+
 ## 0.3.0（2026-10-20）
 
 范围：完成前自检门槛、返工信号强制回流、扩张规则（任务 [0004](tasks/0004-rework-driven-rules.md)）。

@@ -17,6 +17,7 @@ Product Spine（项目方向）
 
 spine-kit 是 Agent 读取的配置规范；由 Agent 按 ADOPT 将规则适配到项目本地，不需要执行本仓库程序。
 Product Spine 在项目启动/方向变化时维护，不必每个任务重写。
+流程中的 Trellis 各步指职责；项目可用 Trellis CLI 或手动模式完成，选择方式见[安装清单](tools/INSTALL.md#trellis-接入决策)。
 
 ## 1. Product Spine 定方向，Grill with Docs 澄清当前需求
 

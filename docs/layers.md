@@ -23,6 +23,7 @@ Superpowers 按需提供 `test-driven-development`、`systematic-debugging`、`v
 需求澄清默认使用 Grill with Docs，已有结论不重复跑 Superpowers brainstorming。
 Product Spine 是文档；Product Path Gate 是检查表；它们不需要安装 CLI。
 Trellis 目录/手动模板不等于完整 Trellis CLI 与自动注入能力。实际安装与集成必须验证。
+CLI 是可选增强；安装需用户同意，未表态时用手动模式，见[Trellis 接入决策](../tools/INSTALL.md#trellis-接入决策)。
 
 ## 角色和扩展
 

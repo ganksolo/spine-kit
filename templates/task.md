@@ -2,7 +2,7 @@
 
 - Owner:
 - Path: Quick / Standard / High-risk（原因）
-- Status: planned / in-progress / in-review / awaiting-validation / done
+- Status: planned / in-progress / in-review / awaiting-validation / done / superseded（注明由哪个任务接替）
 - Git scope: base / branch / head（含未提交文件）
 - Delivery: merged=no; released=no（不适用写原因）
 

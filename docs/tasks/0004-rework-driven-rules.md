@@ -1,6 +1,7 @@
 # 0004 — 把自检、回流和扩张约束改为可触发的规则
 
-Status: In Review
+Status: done（范围：规范文本；真实项目效果待试点观察）
+Delivery: merged=yes（2026-10-20，ganksolo/spine-kit#1）；released=不适用
 
 ## Objective
 
@@ -9,7 +10,7 @@ Status: In Review
 
 ## Non-goals
 
-不处理文档体积预算、上游 GLOSSARY/to-tickets 映射、Trellis CLI 默认地位（另行决定）；
+不处理文档体积预算、上游 GLOSSARY/to-tickets 映射、Trellis CLI 默认地位（已由 [0005](0005-trellis-adoption-decision.md) 处理）；
 不安装工具、不修改使用方项目，不把文字走查当作真实试点。
 
 ## Acceptance / Evidence
@@ -28,4 +29,5 @@ Status: In Review
 
 2026-10-20 用户 Review：指出自检门槛在主规范与模板冲突、扩张规则过窄、返工信号定义不一致且误含首轮 Review。已按建议统一（扩张规则额外要求假设写明验证方式、超范围由用户确认）。
 
-实现者自查结果见 [验证记录](../validation.md)。独立 Review 与真实项目试点未执行，不标 Done。
+实现者自查结果见 [验证记录](../validation.md)。独立 Review：由用户完成上述一轮，修正后用户确认提交并合并 PR #1。
+独立 Agent Review 与真实项目试点未执行；规则能否减少返工需在使用方项目中观察。

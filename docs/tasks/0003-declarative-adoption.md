@@ -1,6 +1,9 @@
 # 0003 — 改为 Agent 可读的工作流配置规范
 
-Status: In Review
+Status: Closed — 内容已合并，未经独立 Review（2026-10-26 补记）
+Delivery: merged=yes（2026-10-20 直接提交 main，`13eedb4`，未走 PR）；released=不适用
+
+后续 0004、0005 在本任务基础上修订并经用户 Review。本任务不再单独补做 Review；如发现 0.2.0 遗留问题，另开任务处理。
 
 ## Objective
 
@@ -9,7 +12,7 @@ Status: In Review
 
 ## Non-goals
 
-不安装外部工具，不自动迁移业务项目，不修改 A 股项目；不将文档走查当成真实集成验收。
+不安装外部工具，不自动迁移业务项目，不修改来源业务项目；不将文档走查当成真实集成验收。
 
 ## Acceptance / Evidence
 
@@ -28,4 +31,4 @@ Status: In Review
 
 实现者自查：规范与产品定位一致，无新增工具层；按需技能、经验回流及适配日志已覆盖。
 相对链接、旧依赖扫描与 diff 空白检查通过，详见 [验证记录](../validation.md)。
-独立 Review 和真实项目适配试点尚未执行，不标 Done。
+独立 Review 和真实项目适配试点未执行，因此关闭状态为 Closed 而非 Done。

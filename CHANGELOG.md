@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.4.0 — 2026-10-26（Trellis 接入决策）
+
+明确 Trellis 的职责必需、CLI 可选：
+- tools/INSTALL.md 新增“Trellis 接入决策”：CLI 相对手动模式多出的能力、盘点项、三种结果及对应适配状态、手动模式最小约定。
+- 全局安装和会写入项目的 `trellis init` 需用户在本次对话明确同意，不能由“适配流程”推定；用户未表态时采用手动模式，适配记为 partial。
+- 手动模式不手工创建 `.trellis/`；WORKFLOW 中的 Trellis 步骤指职责，两种模式都执行。
+同步 ADOPT、WORKFLOW、layers、项目 WORKFLOW 模板、适配记录模板与示例。
+维护：README 当前版本说明更新（0.3.0 漏改）；任务模板新增 `superseded` 状态；补记 0003/0004 状态与合并信息；任务记录不再出现具体业务项目名。
+升级：见 docs/maintenance.md“从 0.3.0 更新到 0.4.0”。
+
 ## 0.3.0 — 2026-10-20（规则加严）
 
 针对“标 Done 后被打回”“教训只进 Journal 不回流”“范围扩张”三类失败，把原则改为可触发的机制：
