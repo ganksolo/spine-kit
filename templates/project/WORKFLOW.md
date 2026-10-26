@@ -3,6 +3,7 @@
 ## 本地规则位置
 
 - Product Spine：TODO
+- Trellis 模式：CLI（版本、已验证能力）/ 手动模式（用户是否明确选择）：TODO
 - Trellis 当前任务/任务创建、检查与收尾位置：TODO
 - Journal / 接续方式：TODO
 - Product Path Gate：TODO

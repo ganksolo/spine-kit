@@ -1,6 +1,7 @@
 # 0004 — 把自检、回流和扩张约束改为可触发的规则
 
-Status: In Review
+Status: done（范围：规范文本；真实项目效果待试点观察）
+Delivery: merged=yes（2026-10-20，ganksolo/spine-kit#1）；released=不适用
 
 ## Objective
 
@@ -9,7 +10,7 @@ Status: In Review
 
 ## Non-goals
 
-不处理文档体积预算、上游 GLOSSARY/to-tickets 映射、Trellis CLI 默认地位（另行决定）；
+不处理文档体积预算、上游 GLOSSARY/to-tickets 映射、Trellis CLI 默认地位（已由 [0005](0005-trellis-adoption-decision.md) 处理）；
 不安装工具、不修改使用方项目，不把文字走查当作真实试点。
 
 ## Acceptance / Evidence
@@ -26,6 +27,9 @@ Status: In Review
 
 ## Gate / Review
 
-2026-10-20 用户 Review：指出自检门槛在主规范与模板冲突、扩张规则过窄、返工信号定义不一致且误含首轮 Review。已按建议统一（扩张规则额外要求假设写明验证方式、超范围由用户确认）。
+2026-10-20 独立 Agent Review：由用户发起，未参与实现的 Codex 审查会话读取实际 diff，指出自检门槛冲突、扩张规则过窄、返工信号定义不一致。实现者修正后，同一审查会话复查，确认三项阻塞问题已解决，仅剩 INSTALL 未写明“不新增预防措施可说明理由”的非阻塞建议。
 
-实现者自查结果见 [验证记录](../validation.md)。独立 Review 与真实项目试点未执行，不标 Done。
+2026-10-26 补记：上述审查应归为独立 Agent Review，而非用户本人完成的 Review。INSTALL 的非阻塞建议已在本轮补齐，与 WORKFLOW 保持一致；本轮修正由原审查会话执行，不另计为独立 Review。
+
+实现者自查结果见 [验证记录](../validation.md)。PR #1 已合并；done 仅表示规范文本范围验收完成。
+真实项目试点未执行；规则能否减少返工需在使用方项目中观察。
