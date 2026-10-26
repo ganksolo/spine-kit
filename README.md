@@ -64,3 +64,7 @@ Trellis 管任务；Superpowers 按需提供执行技能，不再建立另一份
 - 0.4.0 明确 Trellis 职责必需、CLI 可选：安装与 `trellis init` 须用户同意，未表态时用手动模式。
 
 版本与 commit 用于追溯参考来源，不会自动替目标项目升级。已接入项目升级前先读[迁移说明](docs/maintenance.md)，不要直接删除旧文件。
+
+## 许可证
+
+本仓库的规范与模板采用 [MIT License](LICENSE)。引用的第三方工具、skills 和文档仍遵循各自许可证。

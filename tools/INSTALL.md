@@ -28,7 +28,7 @@ Trellis CLI 是实现这些职责的可选增强，不是适配的必需项。WO
 
 以下依据上游 README（2026-10-26 读取，未在本仓库实测，实际安装前须重新核对）：
 - 安装：全局 npm 包，需要 Node.js 与 Python；`init` 在项目中写入 `.trellis/`（spec、tasks、workspace/journal）、平台相关生成文件和 hooks；上游提供 dry-run 与卸载命令。
-- 能力：每个会话自动注入 spec；implement/check 子 Agent 获得精选上下文；finish-work 自动归档任务并更新 Journal。
+- 能力：在宿主支持且所需 hooks/权限已启用时，可在会话中自动或按需注入 spec；implement/check 根据宿主能力由子 Agent 或主会话执行并获得精选上下文；finish-work 负责归档已完成任务并更新 Journal。具体能力必须按所用宿主实测。
 手动模式没有这些自动能力，靠入口文件引用和 Agent 按规则执行，规范过期的风险更高。
 
 ### 盘点
